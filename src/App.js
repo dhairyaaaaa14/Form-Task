@@ -3,7 +3,7 @@ import Input from "./components/Input";
 import api from "./api/data";
 import { v1 as uuid } from "uuid";
 import ShowButton from "./components/ShowButton";
-import "../src/App.css"
+ import "../src/App.css"
 import { BrowserRouter as Router, Routes, 
   Route, Redirect,} from "react-router-dom";
 
@@ -14,12 +14,12 @@ function App() {
  
 
   return (
-    <div className="form-container">
+    <div className="App">
     <Router >
       <Routes>
       {/* <Route path="/"  /> */}
       <Route path="/showdata" element={<Data/>} />
-      <Route path="/adddata" element={<FormInput/>} />
+      <Route path="/" element={<FormInput/>} />
       </Routes>
     </Router>
     
