@@ -1,9 +1,27 @@
 import React, { useState, useEffect } from "react";
 import api from "../api/data";
 import "bootstrap/dist/css/bootstrap.min.css";
-let counter = 1;
+import data from "../api/data";
+import "./css/Data.css";
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Redirect,
+  Link,
+} from "react-router-dom";
+
 function Data() {
+  const rowStyle = {
+    backgroundColor: "#c0c0c0",
+  };
+  const altRowStyle = {
+    backgroundColor: "#ffffff",
+  };
+
   const [formList, setFormList] = useState([]);
+  // const [formData, setFormData] = useState("")
 
   //Retrieve data
   const retrieveData = async () => {
@@ -20,46 +38,82 @@ function Data() {
     };
 
     getAllData();
+
+    //setCounter(counter+1);
     console.log(formList);
   }, []);
 
-  return  (
-      <div>
-      <h1>List of Data</h1>
-      <table class="table table-striped">
+  // Delete Data
+  const deleteData = async (id) => {
+    await api.delete(`/data/${id}`);
+    const newData = formList.filter((data) => {
+      return data.id !== id;
+    });
+    setFormList(newData);
+  };
+
+  return (
+    <div className="mx-5">    
+      <h1 class="center">List of Data</h1>
+      <Link to="/add">
+        <button  className="btn btn-success">Add Data</button>
+      </Link>
+      <table class="table nth-child">
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col">Sr No.</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Choice</th>
             <th scope="col">Tech</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
-      </table>
 
-      {formList.map((entry) =>  {
-        console.log(entry)
-        return  (
-          <table class="table table-striped">
+        {formList.map((entry, index) => {
+          console.log(entry);
+          {
+            /* updateCounter(); */
+          }
+          return (
             <tbody>
-              <tr>
-             
-                <th scope="row">{counter++}</th>
+              <tr style={index % 2 === 0 ? rowStyle : altRowStyle}>
+                <td>{index + 1}</td>
                 <td>{entry.inputText}</td>
                 <td>{entry.inputEmail}</td>
                 <td>{entry.inputSelect}</td>
                 {/* <td>{entry.inputCheckbox}</td> */}
-                {entry.inputCheckbox.length>0 && <td>{entry.inputCheckbox.map(item => {
-                 return <span>{item+" "} </span>
-                })}</td>}
+                {entry.inputCheckbox.length > 0 && (
+                  <td>
+                    {entry.inputCheckbox.map((item) => {
+                      return <span>{item + " "} </span>;
+                    })}
+                  </td>
+                )}
+
+                <td>{entry.inputRadio}</td>
+                <td>
+                  <Link to={`/update/${entry.id}`} state={entry}>
+                    <button class="btn btn-outline-dark">Update</button>
+                  </Link>
+                </td>
+                <td>                  
+                  <button
+                    class="btn btn-danger "
+                    onClick={() => deleteData(entry.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             </tbody>
-          </table>
-        ) ;
-      })}
+          );
+        })}
+      </table>
     </div>
-  ) ;
+  );
 }
 
 export default Data;

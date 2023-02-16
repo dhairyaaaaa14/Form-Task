@@ -2,7 +2,7 @@ import React from 'react'
 
 function Input(props) {
   return (
-    <input type={props.type} name={props.name} onChange={props.onChange}/>
+    <input type={props.type} checked={props.checked}  name={props.name} onChange={props.onChange} value={props.value}/>
   )
 }
 
