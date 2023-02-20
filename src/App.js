@@ -18,7 +18,7 @@ function App() {
     <div className="App">
     <Router >
       <Routes>
-      {/* <Route path="/"  /> */}
+    
       <Route path="/" element={<Data/>} />
       <Route path="/add" element={<FormInput/>} />
       <Route path="/update/:id" element={<UpdateForm/>} />

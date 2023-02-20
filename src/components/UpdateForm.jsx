@@ -19,6 +19,7 @@ import ShowButton from "./ShowButton";
 const UpdateForm = () => {
   const location = useLocation();
   const [formData, setFormData] = useState(location.state);
+  
   console.log(formData);
   // {
   //   inputText: "",
@@ -330,7 +331,7 @@ const UpdateForm = () => {
           </button>
         </div>
       </form>
-      <div>{id}</div>
+      {/* <div>{id}</div> */}
       <br></br>
       <Link to="/">
 
